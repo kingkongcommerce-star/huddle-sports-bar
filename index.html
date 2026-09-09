@@ -577,7 +577,7 @@
 
   // Pulls Tonight's Game from a public Google Sheet so it can be updated with no code.
   // Sheet: League,Matchup,Time (row 2)
-  const TONIGHT_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1oZfz0uXbRANM_31LFn0jJb5Md3i1c_6ATQgnrZkjL_0/export?format=csv&gid=0';
+  const TONIGHT_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1oZfz0uXbRANM_31LFn0jJb5Md3i1c_6ATQgnrZkjL_0/export?format=csv&gid=1411690039';
   fetch(TONIGHT_SHEET_CSV)
     .then(r => r.ok ? r.text() : Promise.reject())
     .then(csv => {
