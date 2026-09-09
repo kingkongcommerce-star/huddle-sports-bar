@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Huddle Sports Bar | District 1, Saigon</title>
+<meta name="description" content="The Huddle Sports Bar — District 1, Ho Chi Minh City. Live EPL, La Liga, F1, UFC & boxing on the big screens. Pool, darts, cold drinks, private events & birthday parties for 20-30 people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#ff6a00;
+    --orange-bright:#ff8c1a;
+    --black:#0a0a0a;
+    --charcoal:#141414;
+    --charcoal-2:#1c1c1c;
+    --white:#f5f5f2;
+    --grey:#a8a8a4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Barlow',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    line-height:1;
+  }
+  a{text-decoration:none;color:inherit;}
+  img,video{display:block;max-width:100%;}
+  .container{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;
+    background:rgba(10,10,10,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,106,0,0.15);
+    transition:padding .3s ease;
+  }
+  .logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:1px;color:var(--white);}
+  .logo span{color:var(--orange);}
+  nav ul{display:flex;gap:32px;list-style:none;}
+  nav a{font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);transition:color .2s;}
+  nav a:hover{color:var(--orange);}
+  .nav-cta{
+    background:var(--orange);color:var(--black)!important;
+    padding:10px 20px;border-radius:4px;font-weight:800;
+    font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .menu-toggle{display:none;background:none;border:none;color:var(--white);font-size:26px;cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    position:relative;height:100vh;min-height:640px;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    overflow:hidden;
+  }
+  .hero video{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    min-width:100%;min-height:100%;width:auto;height:auto;object-fit:cover;
+    filter:brightness(0.45) saturate(1.1);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.2) 40%, rgba(10,10,10,0.95) 100%);
+  }
+  .hero-content{position:relative;z-index:2;padding:0 20px;}
+  .hero-tag{
+    display:inline-block;color:var(--orange);font-weight:800;letter-spacing:3px;
+    font-size:13px;margin-bottom:18px;text-transform:uppercase;
+  }
+  .hero h1{font-size:clamp(46px,9vw,110px);color:var(--white);}
+  .hero h1 .accent{color:var(--orange);text-shadow:0 0 40px rgba(255,106,0,.5);}
+  .hero-sub{
+    margin:22px auto 36px;max-width:640px;font-size:clamp(16px,2vw,20px);
+    color:var(--grey);font-weight:500;
+  }
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .btn{
+    padding:16px 34px;border-radius:4px;font-weight:800;text-transform:uppercase;
+    letter-spacing:.5px;font-size:14px;transition:transform .2s, box-shadow .2s;
+    display:inline-block;
+  }
+  .btn-primary{background:var(--orange);color:var(--black);box-shadow:0 8px 30px rgba(255,106,0,.35);}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 34px rgba(255,106,0,.5);}
+  .btn-outline{border:2px solid var(--white);color:var(--white);}
+  .btn-outline:hover{background:var(--white);color:var(--black);transform:translateY(-3px);}
+  .scroll-cue{
+    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+    z-index:2;color:var(--grey);font-size:12px;letter-spacing:2px;
+    text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scroll-cue .line{width:1px;height:36px;background:linear-gradient(var(--orange),transparent);animation:scrollpulse 1.8s infinite;}
+  @keyframes scrollpulse{0%{opacity:0;}50%{opacity:1;}100%{opacity:0;}}
+
+  /* SECTION SHARED */
+  section{padding:110px 0;position:relative;}
+  .eyebrow{color:var(--orange);font-weight:800;letter-spacing:3px;font-size:13px;text-transform:uppercase;margin-bottom:14px;}
+  .section-head{text-align:center;max-width:700px;margin:0 auto 64px;}
+  .section-head h2{font-size:clamp(32px,5vw,54px);color:var(--white);}
+  .section-head p{color:var(--grey);margin-top:16px;font-size:17px;}
+
+  /* ABOUT */
+  .about{background:var(--charcoal);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+  .about-media{position:relative;border-radius:8px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.5);}
+  .about-media img{width:100%;height:520px;object-fit:cover;}
+  .about-media::before{
+    content:"";position:absolute;inset:0;border:2px solid var(--orange);
+    border-radius:8px;margin:16px;pointer-events:none;
+  }
+  .about-text p{color:var(--grey);font-size:17px;line-height:1.8;margin-bottom:20px;}
+  .about-text strong{color:var(--white);}
+  .stat-row{display:flex;gap:36px;margin-top:36px;flex-wrap:wrap;}
+  .stat b{display:block;font-family:'Anton',sans-serif;font-size:38px;color:var(--orange);}
+  .stat span{color:var(--grey);font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+
+  /* SPORTS TICKER */
+  .ticker-wrap{
+    background:var(--orange);color:var(--black);padding:16px 0;overflow:hidden;
+    white-space:nowrap;border-top:1px solid #000;border-bottom:1px solid #000;
+  }
+  .ticker{display:inline-block;animation:tick 26s linear infinite;font-family:'Anton',sans-serif;font-size:20px;letter-spacing:1px;}
+  .ticker span{margin:0 28px;}
+  @keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* SPORTS GRID */
+  .sports{background:var(--black);}
+  .sport-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+  .sport-card{
+    background:var(--charcoal-2);border:1px solid rgba(255,106,0,.15);border-radius:10px;
+    padding:32px 24px;text-align:center;transition:transform .25s, border-color .25s, background .25s;
+  }
+  .sport-card:hover{transform:translateY(-6px);border-color:var(--orange);background:var(--charcoal);}
+  .sport-card .ico{font-size:36px;margin-bottom:14px;}
+  .sport-card h3{font-size:16px;color:var(--white);letter-spacing:.5px;}
+
+  /* AMENITIES / EVENTS */
+  .events{background:var(--charcoal);}
+  .events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .event-card{
+    background:var(--black);border-radius:10px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);transition:transform .25s;
+  }
+  .event-card:hover{transform:translateY(-8px);}
+  .event-card img{height:230px;width:100%;object-fit:cover;}
+  .event-body{padding:26px;}
+  .event-body h3{color:var(--orange);font-size:20px;margin-bottom:10px;}
+  .event-body p{color:var(--grey);font-size:15px;line-height:1.6;}
+
+  /* GALLERY */
+  .gallery{background:var(--black);}
+  .gallery-grid{
+    columns:4 260px;column-gap:16px;
+  }
+  .gallery-grid img{
+    width:100%;margin-bottom:16px;border-radius:8px;
+    break-inside:avoid;cursor:pointer;
+    transition:transform .3s, filter .3s;
+    filter:saturate(1.05);
+  }
+  .gallery-grid img:hover{transform:scale(1.02);filter:brightness(1.1) saturate(1.15);}
+
+  /* VIDEO REEL */
+  .reel{background:var(--charcoal);}
+  .reel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .reel-item{position:relative;border-radius:10px;overflow:hidden;background:#000;box-shadow:0 20px 40px rgba(0,0,0,.4);}
+  .reel-item video{width:100%;height:340px;object-fit:cover;}
+  .reel-play{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.25);cursor:pointer;transition:background .2s;
+  }
+  .reel-play:hover{background:rgba(0,0,0,.1);}
+  .reel-play .circle{
+    width:64px;height:64px;border-radius:50%;background:var(--orange);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(255,106,0,.5);
+  }
+  .reel-play .circle::after{
+    content:"";border-left:20px solid var(--black);border-top:12px solid transparent;
+    border-bottom:12px solid transparent;margin-left:5px;
+  }
+  .reel-play.hidden{display:none;}
+
+  /* LOCATION */
+  .location{background:var(--black);}
+  .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .loc-card{background:var(--charcoal-2);border:1px solid rgba(255,106,0,.15);border-radius:12px;padding:40px;}
+  .loc-row{display:flex;gap:16px;margin-bottom:26px;align-items:flex-start;}
+  .loc-row .ico{color:var(--orange);font-size:22px;width:28px;}
+  .loc-row h4{color:var(--white);font-size:15px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+  .loc-row p{color:var(--grey);font-size:15px;line-height:1.6;}
+  .loc-row a{color:var(--orange);font-weight:600;}
+  .social-row{display:flex;gap:14px;margin-top:30px;}
+  .social-btn{
+    flex:1;text-align:center;padding:14px;border-radius:6px;font-weight:700;
+    font-size:14px;text-transform:uppercase;letter-spacing:.5px;border:2px solid rgba(255,255,255,.15);
+    transition:border-color .2s, background .2s;
+  }
+  .social-btn:hover{border-color:var(--orange);background:rgba(255,106,0,.08);}
+  .map-embed{border-radius:12px;overflow:hidden;height:100%;min-height:420px;border:1px solid rgba(255,106,0,.15);}
+  .map-embed iframe{width:100%;height:100%;min-height:420px;border:0;filter:grayscale(0.3) contrast(1.1);}
+
+  /* FOOTER CTA */
+  .cta-band{
+    background:linear-gradient(120deg, var(--orange), #cc4e00);
+    color:var(--black);text-align:center;padding:90px 24px;
+  }
+  .cta-band h2{font-size:clamp(30px,5vw,52px);margin-bottom:20px;}
+  .cta-band p{font-size:18px;margin-bottom:34px;font-weight:600;}
+  .cta-band .btn-outline{border-color:var(--black);color:var(--black);}
+  .cta-band .btn-outline:hover{background:var(--black);color:var(--orange);}
+
+  footer{background:var(--black);padding:40px 24px;text-align:center;border-top:1px solid rgba(255,255,255,.08);}
+  footer p{color:var(--grey);font-size:13px;}
+  footer .fname{color:var(--orange);font-weight:800;}
+
+  @media(max-width:900px){
+    nav ul, .nav-cta{display:none;}
+    .menu-toggle{display:block;}
+    .about-grid, .loc-grid{grid-template-columns:1fr;}
+    .events-grid{grid-template-columns:1fr;}
+    .reel-grid{grid-template-columns:1fr;}
+    .gallery-grid{columns:2 200px;}
+    .about-media img{height:340px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <a href="#top" class="logo">THE <span>HUDDLE</span> SPORTS BAR</a>
+  <nav><ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#sports">Sports</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul></nav>
+  <a href="tel:0938295992" class="nav-cta">Call Now</a>
+  <button class="menu-toggle" aria-label="menu">&#9776;</button>
+</header>
+
+<section class="hero" id="top">
+  <video autoplay muted loop playsinline poster="assets/videos/video1-poster.jpg">
+    <source src="assets/videos/video1.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <span class="hero-tag">District 1 &middot; Ho Chi Minh City</span>
+    <h1>BIG SCREENS.<br>COLD DRINKS.<br><span class="accent">GOOD VIBES.</span></h1>
+    <p class="hero-sub">Saigon's home for live football, EPL, La Liga, F1, boxing &amp; UFC — pool, darts, ice-cold beer and a crowd that shows up for every big game.</p>
+    <div class="hero-btns">
+      <a href="tel:0938295992" class="btn btn-primary">Call 0938 295 992</a>
+      <a href="#location" class="btn btn-outline">Get Directions</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>⚽ ENGLISH PREMIER LEAGUE</span>
+    <span>🏆 LA LIGA</span>
+    <span>🏎️ FORMULA 1</span>
+    <span>🥊 BOXING</span>
+    <span>🥋 UFC</span>
+    <span>🎱 POOL</span>
+    <span>🎯 DARTS</span>
+    <span>⚽ ENGLISH PREMIER LEAGUE</span>
+    <span>🏆 LA LIGA</span>
+    <span>🏎️ FORMULA 1</span>
+    <span>🥊 BOXING</span>
+    <span>🥋 UFC</span>
+    <span>🎱 POOL</span>
+    <span>🎯 DARTS</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-media">
+      <img src="assets/images/IMG_1650.JPG" alt="Inside The Huddle Sports Bar">
+    </div>
+    <div class="about-text">
+      <span class="eyebrow">The Spot</span>
+      <h2 style="margin-bottom:22px;">This is where the crew watches the game</h2>
+      <p><strong>The Huddle Sports Bar</strong> is a modern sports bar in the heart of District 1, Saigon. Open from day to night, we serve delicious food, ice-cold beer, handcrafted cocktails, premium spirits, and coffee in a fun, welcoming spot built for friends to hang around, catch a match, and stay for a few rounds.</p>
+      <p>Every big screen is tuned to the game — <strong>English Premier League, La Liga, Formula 1, boxing, UFC</strong> — with pool and darts running all night for the group that wants more than just a seat at the bar.</p>
+      <div class="stat-row">
+        <div class="stat"><b>5.0</b><span>Google Rating</span></div>
+        <div class="stat"><b>29+</b><span>Reviews</span></div>
+        <div class="stat"><b>20–30</b><span>Guests / Private Event</span></div>
+        <div class="stat"><b>7</b><span>Days a Week</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sports" id="sports">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">On The Big Screens</span>
+      <h2>Every Match. Every Fight. Every Race.</h2>
+      <p>Live and loud — pull up a seat and never miss a second.</p>
+    </div>
+    <div class="sport-grid">
+      <div class="sport-card"><div class="ico">⚽</div><h3>English Premier League</h3></div>
+      <div class="sport-card"><div class="ico">🏆</div><h3>La Liga</h3></div>
+      <div class="sport-card"><div class="ico">⚽</div><h3>Football / Live Sports</h3></div>
+      <div class="sport-card"><div class="ico">🏎️</div><h3>Formula 1</h3></div>
+      <div class="sport-card"><div class="ico">🥊</div><h3>Boxing</h3></div>
+      <div class="sport-card"><div class="ico">🥋</div><h3>UFC</h3></div>
+      <div class="sport-card"><div class="ico">🎱</div><h3>Pool</h3></div>
+      <div class="sport-card"><div class="ico">🎯</div><h3>Darts</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="events" id="events">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Book The Huddle</span>
+      <h2>Private Events &amp; Celebrations</h2>
+      <p>Bring your crew — we'll handle the screens, the drinks, and the vibe.</p>
+    </div>
+    <div class="events-grid">
+      <div class="event-card">
+        <img src="assets/images/IMG_1656.JPG" alt="Company event at The Huddle Sports Bar">
+        <div class="event-body">
+          <h3>Company Events</h3>
+          <p>Host your team offsite, happy hour, or game-day watch party. We set up private space for groups of 20 to 30 people, big screens included.</p>
+        </div>
+      </div>
+      <div class="event-card">
+        <img src="assets/images/IMG_1660.JPG" alt="Birthday party at The Huddle Sports Bar">
+        <div class="event-body">
+          <h3>Birthday Parties</h3>
+          <p>Celebrate with your crew — drinks, pool, darts, and the game on every screen. Let us know the headcount and we'll make it happen.</p>
+        </div>
+      </div>
+      <div class="event-card">
+        <img src="assets/images/IMG_1663.JPG" alt="Friends hanging out watching sports">
+        <div class="event-body">
+          <h3>Game Day Hangs</h3>
+          <p>No occasion needed. Grab your regular seat, order a round, and settle in for kickoff with the rest of the regulars.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reel">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">See It Live</span>
+      <h2>Inside The Huddle</h2>
+    </div>
+    <div class="reel-grid">
+      <div class="reel-item">
+        <video controls playsinline poster="assets/videos/video1-poster.jpg"><source src="assets/videos/video1.mp4" type="video/mp4"></video>
+      </div>
+      <div class="reel-item">
+        <video controls playsinline poster="assets/videos/video2-poster.jpg"><source src="assets/videos/video2.mp4" type="video/mp4"></video>
+      </div>
+      <div class="reel-item">
+        <video controls playsinline poster="assets/videos/video3-poster.jpg"><source src="assets/videos/video3.mp4" type="video/mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Gallery</span>
+      <h2>The Huddle, In Session</h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="container loc-grid">
+    <div class="loc-card">
+      <span class="eyebrow">Find Us</span>
+      <h2 style="margin-bottom:30px;">Visit The Huddle</h2>
+      <div class="loc-row"><div class="ico">📍</div><div><h4>Address</h4><p>37 Hai Bà Trưng, Phường Bến Nghé, District 1<br>Ho Chi Minh City, Vietnam</p></div></div>
+      <div class="loc-row"><div class="ico">📞</div><div><h4>Phone</h4><p><a href="tel:0938295992">0938 295 992</a></p></div></div>
+      <div class="loc-row"><div class="ico">🕐</div><div><h4>Hours</h4><p>Open daily &middot; Closes 12 AM</p></div></div>
+      <div class="loc-row"><div class="ico">🍺</div><div><h4>On Offer</h4><p>Bar games &middot; Food at the bar &middot; Happy-hour drinks &middot; Handcrafted cocktails &middot; Premium spirits &middot; Coffee</p></div></div>
+      <div class="social-row">
+        <a href="https://www.facebook.com/profile.php?id=61591662244958" target="_blank" class="social-btn">Facebook</a>
+        <a href="https://www.instagram.com/thehuddle_sportsbar" target="_blank" class="social-btn">Instagram</a>
+      </div>
+    </div>
+    <div class="map-embed">
+      <iframe src="https://www.google.com/maps?q=37+Hai+B%C3%A0+Tr%C6%B0ng,+Ph%C6%B0%E1%BB%9Dng+B%E1%BA%BFn+Ngh%C3%A9,+Ho+Chi+Minh+City,+Vietnam&output=embed" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Kickoff Is Coming. Grab Your Table.</h2>
+  <p>Call ahead for game day, or book The Huddle for your next event.</p>
+  <a href="tel:0938295992" class="btn btn-outline">Call 0938 295 992</a>
+</div>
+
+<footer>
+  <p>&copy; 2026 <span class="fname">The Huddle Sports Bar</span> — 37 Hai Bà Trưng, District 1, Ho Chi Minh City</p>
+</footer>
+
+<script>
+  const imgs = [1650,1651,1652,1653,1654,1655,1656,1657,1658,1659,1660,1661,1662,1663,1664,1665,1666,1667,1669,1670,1671];
+  const grid = document.getElementById('galleryGrid');
+  imgs.forEach(n => {
+    const img = document.createElement('img');
+    img.src = `assets/images/IMG_${n}.JPG`;
+    img.loading = 'lazy';
+    img.alt = 'The Huddle Sports Bar';
+    grid.appendChild(img);
+  });
+
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.style.padding = window.scrollY > 40 ? '10px 32px' : '18px 32px';
+  });
+</script>
+
+</body>
+</html>
