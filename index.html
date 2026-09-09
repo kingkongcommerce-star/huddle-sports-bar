@@ -373,9 +373,9 @@
   <div class="container">
     <div class="tonight-card">
       <div class="tonight-eyebrow">Tonight's Game</div>
-      <div class="tonight-league"><!-- EDIT: league name --> ⚽ Premier League</div>
-      <div class="tonight-match"><!-- EDIT: matchup -->Liverpool vs Arsenal</div>
-      <div class="tonight-time"><!-- EDIT: kickoff time -->Kickoff 10:30 PM</div>
+      <div class="tonight-league" id="tonightLeague">⚽ Premier League</div>
+      <div class="tonight-match" id="tonightMatch">Liverpool vs Arsenal</div>
+      <div class="tonight-time" id="tonightTime">Kickoff 10:30 PM</div>
       <a href="tel:0938295992" class="btn btn-primary">Book a Table</a>
       <p class="tonight-note">Get here early for the big ones — seats fill up fast on match night.</p>
     </div>
@@ -574,6 +574,21 @@
   window.addEventListener('scroll', () => {
     header.style.padding = window.scrollY > 40 ? '10px 32px' : '18px 32px';
   });
+
+  // Pulls Tonight's Game from a public Google Sheet so it can be updated with no code.
+  // Sheet: League,Matchup,Time (row 2)
+  const TONIGHT_SHEET_CSV = 'https://docs.google.com/spreadsheets/d/1oZfz0uXbRANM_31LFn0jJb5Md3i1c_6ATQgnrZkjL_0/export?format=csv&gid=0';
+  fetch(TONIGHT_SHEET_CSV)
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(csv => {
+      const row = csv.trim().split('\n')[1];
+      if (!row) return;
+      const [league, matchup, time] = row.split(',').map(s => s.trim());
+      if (league) document.getElementById('tonightLeague').textContent = league;
+      if (matchup) document.getElementById('tonightMatch').textContent = matchup;
+      if (time) document.getElementById('tonightTime').textContent = time;
+    })
+    .catch(() => { /* sheet not public yet or offline — falls back to the text already in the page */ });
 </script>
 
 </body>
