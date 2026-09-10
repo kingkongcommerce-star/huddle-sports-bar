@@ -675,9 +675,15 @@
   fetch(TONIGHT_SHEET_CSV)
     .then(r => r.ok ? r.text() : Promise.reject())
     .then(csv => {
-      const row = csv.trim().split('\n')[1];
-      if (!row) return;
-      const [league, matchup, date, time, venue] = row.split(',').map(s => (s || '').trim());
+      const lines = csv.trim().split('\n');
+      if (lines.length < 2) return;
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      const values = lines[1].split(',').map(v => (v || '').trim());
+      const get = name => {
+        const i = headers.indexOf(name);
+        return i === -1 ? '' : values[i];
+      };
+      const league = get('league'), matchup = get('matchup'), date = get('date'), time = get('time'), venue = get('venue');
       if (league) document.getElementById('tonightLeague').textContent = league;
       if (matchup) document.getElementById('tonightMatch').textContent = matchup;
       if (date) document.getElementById('tonightDate').textContent = date;
