@@ -73,7 +73,8 @@
     border-bottom:1px solid rgba(255,106,0,0.15);
     transition:padding .3s ease;
   }
-  .logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:1px;color:var(--white);}
+  .logo{display:flex;align-items:center;}
+  .logo img{height:56px;width:auto;border-radius:50%;transition:height .3s ease;}
   .logo span{color:var(--orange);}
   nav ul{display:flex;gap:24px;list-style:none;}
   nav a{font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--grey);transition:color .2s;}
@@ -371,7 +372,7 @@
 <body>
 
 <header id="header">
-  <a href="#top" class="logo">THE <span>HUDDLE</span> SPORTS BAR</a>
+  <a href="#top" class="logo"><img src="assets/images/logo.png" alt="The Huddle Sports Bar"></a>
   <nav><ul>
     <li><a href="#tonight">Tonight</a></li>
     <li><a href="#sports">Sports</a></li>
