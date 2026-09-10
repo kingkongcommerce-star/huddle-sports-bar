@@ -231,10 +231,27 @@
     background:linear-gradient(0deg, rgba(0,0,0,.85), transparent);
     color:var(--white);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:14px;
   }
-  .menu-lists{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:700px;margin:0 auto 40px;}
-  .menu-list h3{color:var(--orange);font-size:18px;margin-bottom:16px;letter-spacing:.5px;}
-  .menu-list ul{list-style:none;}
-  .menu-list li{color:var(--grey);font-size:15px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+  .menu-note{max-width:700px;margin:0 auto 40px;text-align:center;color:var(--grey);font-size:15px;line-height:1.6;}
+  .menu-accordion{max-width:760px;margin:0 auto 40px;}
+  .menu-cat{border:1px solid rgba(255,255,255,.1);border-radius:10px;margin-bottom:12px;overflow:hidden;background:var(--charcoal-2);}
+  .menu-cat-btn{
+    width:100%;display:flex;justify-content:space-between;align-items:center;
+    padding:20px 24px;background:none;border:none;cursor:pointer;text-align:left;
+  }
+  .menu-cat-btn h3{color:var(--white);font-size:17px;letter-spacing:.5px;}
+  .menu-cat-btn .arrow{color:var(--orange);font-size:18px;transition:transform .25s;}
+  .menu-cat.open .menu-cat-btn .arrow{transform:rotate(180deg);}
+  .menu-cat.open .menu-cat-btn{border-bottom:1px solid rgba(255,255,255,.1);}
+  .menu-cat-btn:hover h3{color:var(--orange);}
+  .menu-cat-panel{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .menu-cat.open .menu-cat-panel{max-height:1000px;}
+  .menu-cat-panel-inner{padding:8px 24px 20px;}
+  .menu-price-head{display:flex;justify-content:flex-end;gap:50px;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:6px 0;}
+  .menu-item-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+  .menu-item-row:last-child{border-bottom:none;}
+  .menu-item-name{color:var(--grey);font-size:15px;}
+  .menu-item-prices{display:flex;gap:24px;}
+  .menu-item-prices span{color:var(--orange-bright);font-size:14px;font-weight:700;min-width:70px;text-align:right;}
   .food-cta{text-align:center;}
   .food-cta p{color:var(--grey);margin-bottom:22px;font-size:15px;}
 
@@ -338,8 +355,10 @@
     .menu-toggle{display:block;}
     .about-grid, .loc-grid{grid-template-columns:1fr;}
     .events-grid, .food-grid, .reviews-grid{grid-template-columns:1fr;}
-    .menu-lists{grid-template-columns:1fr;}
     .reel-grid{grid-template-columns:1fr;}
+    .menu-item-prices{gap:12px;}
+    .menu-item-prices span{min-width:56px;font-size:13px;}
+    .menu-item-name{font-size:14px;}
     .gallery-grid{columns:2 200px;}
     .about-media img{height:340px;}
     .mobile-book-bar{display:flex;}
@@ -513,31 +532,11 @@
       <div class="food-card"><img src="assets/images/IMG_1665.JPG" alt="Premium spirits at The Huddle Sports Bar"><span>Premium Spirits</span></div>
       <div class="food-card"><img src="assets/images/IMG_1685.JPG" alt="Friends toasting drinks at The Huddle Sports Bar"><span>Cheers With Friends</span></div>
     </div>
-    <div class="menu-lists">
-      <div class="menu-list">
-        <h3>🍔 Food</h3>
-        <ul>
-          <li>Burgers</li>
-          <li>Wings</li>
-          <li>Fries</li>
-          <li>Bar Food</li>
-          <li>Sharing Plates</li>
-        </ul>
-      </div>
-      <div class="menu-list">
-        <h3>🍺 Drinks</h3>
-        <ul>
-          <li>Beer</li>
-          <li>Cocktails</li>
-          <li>Spirits</li>
-          <li>Soft Drinks</li>
-          <li>Coffee</li>
-        </ul>
-      </div>
-    </div>
+    <div class="menu-note">🍔 Food menu (burgers, wings, fries, bar food, sharing plates) available in-house — ask your server. Full priced drinks menu below, tap any category to open it.</div>
+    <div class="menu-accordion" id="menuAccordion"></div>
     <div class="food-cta">
-      <p>Full menu with prices available in-house — ask your server or message us on Facebook for today's specials.</p>
-      <a href="https://www.facebook.com/profile.php?id=61591662244958" target="_blank" class="btn btn-primary">View Menu</a>
+      <p>Message us on Facebook for today's food specials.</p>
+      <a href="https://m.me/61591662244958" target="_blank" class="btn btn-primary">Message Us</a>
     </div>
   </div>
 </section>
@@ -674,6 +673,88 @@
 </div>
 
 <script>
+  // Drinks menu data. Prices are in raw thousands VND as printed on the physical menu (e.g. 65 = 65,000₫).
+  const MENU = [
+    { name: 'Beer', single: true, items: [
+      ['Red Saigon',65],['Green Saigon',65],['Chill Saigon',65],['Tiger',65],['Tiger Light',65],
+      ['Heineken',65],['Tiger Draught',65],['Corona',135],['Sapporo',65],['Strongbow',65],
+      ['San Miguel Light',65],['1664',75],['333',65]
+    ]},
+    { name: 'Cocktails', single: true, items: [
+      ['Whiskey Sour',240],['Old Fashioned',240],['Long Island Iced Tea',270],['Margarita',240],
+      ['Tequila Sunrise',240],['Mojito',240],['Martini',240],['Mai Tai',240],['White Russian',240],
+      ['Black Russian',240],['Cosmopolitan',240],['The Huddle Signature',270],['Sex On The Beach',240]
+    ]},
+    { name: 'Gin', single: false, items: [
+      ['Bombay Sapphire',145,2500],['Gordon\'s',120,1800],['Hendrick\'s',220,4200]
+    ]},
+    { name: 'Vodka', single: false, items: [
+      ['Absolut',125,2000],['Smirnoff',115,1800],['Grey Goose',220,4200]
+    ]},
+    { name: 'Rum', single: false, items: [
+      ['Bacardi Gold',135,1850],['Bacardi Light',135,1850],['Captain Morgan Dark',135,2000],
+      ['Captain Morgan Spiced',135,1800],['Kraken Black Spiced',150,3300]
+    ]},
+    { name: 'Tequila', single: false, items: [
+      ['Patron Silver',280,6600],['Patron Gold',280,6600],['Patron Cafe',280,6600],
+      ['Don Julio',290,6800],['Sierra Reposado',150,2400],['Sierra Cafe',190,2900],['Jose Cuervo',150,2600]
+    ]},
+    { name: 'Wine', single: false, items: [
+      ['Parajes Cabernet Sauvignon (Red)',220,890],['Lindeman\'s Bin 65 Chardonnay (White)',290,1450]
+    ]},
+    { name: 'Liqueurs', single: false, items: [
+      ['Baileys',135,2450],['Campari',135,3000],['Cointreau',135,2450],['Drambuie',135,3200],
+      ['Jagermeister',135,2750],['Kahlua',135,2200],['Malibu',135,2200],['Martini Rosso',135,2600],
+      ['Midori',135,2450],['Sambuca',135,2450],['Moet Champagne',null,4700]
+    ]},
+    { name: 'Cognac', single: false, items: [
+      ['Hennessy VSOP',300,5700],['Martell Cordon Bleu',null,11000]
+    ]},
+    { name: 'Soft Drinks', single: true, items: [
+      ['Coke / Coke Zero',65],['Sprite',65],['Dry Ginger Ale',85],['Tonic Water',65],
+      ['Mineral Water',65],['Coconut',80],['Red Bull',65],['Coffee',50],['Soda Water',65],['Orange Juice',80]
+    ]},
+    { name: 'Shots & Specials', single: true, items: [
+      ['Jager Bomb',190],['Tequila Bomb',190],['B-52',180],['Fireball Shot',150],
+      ['Baby Guinness',180],['Vegas Bomb',220]
+    ]}
+  ];
+  const vnd = n => n == null ? '—' : (n * 1000).toLocaleString('en-US') + '₫';
+
+  const accordion = document.getElementById('menuAccordion');
+  MENU.forEach((cat, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'menu-cat';
+    const btn = document.createElement('button');
+    btn.className = 'menu-cat-btn';
+    btn.innerHTML = `<h3>${cat.name}</h3><span class="arrow">▾</span>`;
+    btn.onclick = () => wrap.classList.toggle('open');
+    const panel = document.createElement('div');
+    panel.className = 'menu-cat-panel';
+    const inner = document.createElement('div');
+    inner.className = 'menu-cat-panel-inner';
+    if (!cat.single) {
+      const head = document.createElement('div');
+      head.className = 'menu-price-head';
+      head.innerHTML = '<span>Glass</span><span>Bottle</span>';
+      inner.appendChild(head);
+    }
+    cat.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'menu-item-row';
+      if (cat.single) {
+        row.innerHTML = `<span class="menu-item-name">${item[0]}</span><span class="menu-item-prices"><span>${vnd(item[1])}</span></span>`;
+      } else {
+        row.innerHTML = `<span class="menu-item-name">${item[0]}</span><span class="menu-item-prices"><span>${vnd(item[1])}</span><span>${vnd(item[2])}</span></span>`;
+      }
+      inner.appendChild(row);
+    });
+    panel.appendChild(inner);
+    wrap.appendChild(btn);
+    wrap.appendChild(panel);
+    accordion.appendChild(wrap);
+  });
+
   const imgs = [1652,1653,1655,1657,1658,1659,1665,1670,1671,1678,1679,1680,1682,1683];
   const grid = document.getElementById('galleryGrid');
   imgs.forEach(n => {
