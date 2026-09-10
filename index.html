@@ -152,7 +152,8 @@
 
   /* HAPPY HOUR */
   .happy-hour{padding:50px 0;background:var(--black);text-align:center;}
-  .happy-hour-link{display:inline-block;position:relative;max-width:420px;width:100%;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(255,106,0,.25);transition:transform .25s;}
+  .happy-hour-row{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:56px;}
+  .happy-hour-link{display:inline-block;position:relative;flex:0 1 420px;min-width:0;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(255,106,0,.25);transition:transform .25s;}
   .happy-hour-link:hover{transform:translateY(-6px);}
   .happy-hour-link img{width:100%;border-radius:14px;}
   .happy-hour-cta{
@@ -160,6 +161,12 @@
     padding:14px;border-radius:6px;font-weight:800;text-transform:uppercase;
     letter-spacing:.5px;font-size:14px;
   }
+  .happy-hour-photo{
+    flex:0 1 480px;min-width:0;
+    -webkit-mask-image:radial-gradient(ellipse 75% 75% at center, #000 55%, transparent 100%);
+    mask-image:radial-gradient(ellipse 75% 75% at center, #000 55%, transparent 100%);
+  }
+  .happy-hour-photo img{width:100%;display:block;}
 
   /* TONIGHT'S GAME */
   .tonight{background:linear-gradient(120deg, var(--charcoal), var(--black));border-top:1px solid rgba(255,106,0,.2);border-bottom:1px solid rgba(255,106,0,.2);padding:64px 0;}
@@ -352,6 +359,8 @@
   .mobile-book-bar .mb-dir{border:1px solid rgba(255,255,255,.25);color:var(--white);}
 
   @media(max-width:900px){
+    .happy-hour-row{flex-direction:column;}
+    .happy-hour-link, .happy-hour-photo{flex:0 1 auto;max-width:420px;width:100%;}
     nav ul, .nav-cta{display:none;}
     .menu-toggle{display:block;}
     .about-grid, .loc-grid{grid-template-columns:1fr;}
@@ -430,10 +439,15 @@
 
 <section class="happy-hour">
   <div class="container">
-    <a href="https://m.me/61591662244958" target="_blank" class="happy-hour-link">
-      <img src="assets/images/happy-hour.jpg" alt="The Huddle Sports Bar Happy Hour, 2PM to 7PM every day — draft beer 39K, basic spirits 79K, wine 140K per glass">
-      <span class="happy-hour-cta">Message Us to Book Happy Hour →</span>
-    </a>
+    <div class="happy-hour-row">
+      <a href="https://m.me/61591662244958" target="_blank" class="happy-hour-link">
+        <img src="assets/images/happy-hour.jpg" alt="The Huddle Sports Bar Happy Hour, 2PM to 7PM every day — draft beer 39K, basic spirits 79K, wine 140K per glass">
+        <span class="happy-hour-cta">Message Us to Book Happy Hour →</span>
+      </a>
+      <div class="happy-hour-photo">
+        <img src="assets/images/unnamed.jpg" alt="The Huddle Sports Bar">
+      </div>
+    </div>
   </div>
 </section>
 
