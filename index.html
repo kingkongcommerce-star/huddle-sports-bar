@@ -495,28 +495,7 @@
   </div>
 </section>
 
-<section class="sports" id="sports">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Watch Every Big Game</span>
-      <h2>Every Match. Every Fight. Every Race.</h2>
-      <p>The go-to Premier League bar, UFC bar and F1 bar in Ho Chi Minh City — live and loud, pull up a seat and never miss a second.</p>
-    </div>
-    <div class="sport-grid">
-      <div class="sport-card"><div class="ico">⚽</div><h3>Premier League</h3></div>
-      <div class="sport-card"><div class="ico">🏆</div><h3>Major Football</h3></div>
-      <div class="sport-card"><div class="ico">🏎️</div><h3>Formula 1</h3></div>
-      <div class="sport-card"><div class="ico">🥋</div><h3>UFC</h3></div>
-      <div class="sport-card"><div class="ico">🥊</div><h3>Boxing</h3></div>
-      <div class="sport-card"><div class="ico">🏈</div><h3>NFL</h3></div>
-      <div class="sport-card"><div class="ico">🎱</div><h3>Pool</h3></div>
-      <div class="sport-card"><div class="ico">🎯</div><h3>Darts</h3></div>
-      <div class="sport-card"><div class="ico">🏟️</div><h3>Other Major Events</h3></div>
-    </div>
-  </div>
-</section>
-
-<section class="why">
+<section class="why" id="sports">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">The Huddle Experience</span>
@@ -531,6 +510,7 @@
       <div class="why-item"><span class="check">✓</span><span>Pool &amp; darts</span></div>
       <div class="why-item"><span class="check">✓</span><span>English-speaking friendly</span></div>
       <div class="why-item"><span class="check">✓</span><span>Central District 1 location</span></div>
+      <div class="why-item"><span class="check">✓</span><span>Other major events</span></div>
     </div>
   </div>
 </section>
@@ -770,7 +750,7 @@
     accordion.appendChild(wrap);
   });
 
-  const imgs = [1652,1653,1655,1657,1658,1659,1665,1670,1671,1678,1679,1680,1682,1683];
+  const imgs = [1652,1653,1655,1657,1658,1659,1665,1670,1671,1678,1679,1680,1681,1683];
   const grid = document.getElementById('galleryGrid');
   imgs.forEach(n => {
     const img = document.createElement('img');
