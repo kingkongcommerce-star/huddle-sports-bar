@@ -8,7 +8,7 @@
 <meta property="og:title" content="The Huddle Sports Bar | Sports Bar in District 1, Ho Chi Minh City">
 <meta property="og:description" content="Watch EPL, F1, UFC, boxing and more live on the big screens. Cold beer, cocktails, food, pool and darts in the heart of District 1, Saigon. Open daily 2PM-3AM.">
 <meta property="og:type" content="business.business">
-<meta property="og:image" content="assets/images/IMG_1682.JPG">
+<meta property="og:image" content="assets/images/IMG_1679.JPG">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script type="application/ld+json">
@@ -17,7 +17,7 @@
   "@type": "BarOrPub",
   "name": "The Huddle Sports Bar",
   "url": "https://kingkongcommerce-star.github.io/huddle-sports-bar/",
-  "image": "assets/images/IMG_1682.JPG",
+  "image": "assets/images/IMG_1679.JPG",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "37 Hai Ba Trung Street, Ben Nghe Ward",
@@ -486,8 +486,8 @@
       <p><strong>The Huddle Sports Bar</strong> is a modern sports bar in the heart of District 1, Ho Chi Minh City, open daily from 2:00 PM to 3:00 AM. We serve delicious food, ice-cold beer, handcrafted cocktails, premium spirits, and coffee in a fun, welcoming spot for locals, expats and travelers to hang around, catch a match, and stay for a few rounds.</p>
       <p>As a sports bar for expats, travelers and sports fans in Saigon, every big screen is tuned to the game — <strong>English Premier League, Formula 1, boxing, UFC</strong> — with pool and darts running all night for the group that wants more than just a seat at the bar.</p>
       <div class="stat-row">
-        <div class="stat"><b>5.0</b><span>Google Rating</span></div>
-        <div class="stat"><b>29+</b><span>Reviews</span></div>
+        <div class="stat"><b id="statRating">5.0</b><span>Google Rating</span></div>
+        <div class="stat"><b id="statReviewCount">29+</b><span>Reviews</span></div>
         <div class="stat"><b>20–30</b><span>Guests / Private Event</span></div>
         <div class="stat"><b>2PM–3AM</b><span>Open Daily</span></div>
       </div>
@@ -573,7 +573,7 @@
   <div class="container">
     <div class="reviews-badge">
       <span class="stars">★★★★★</span>
-      <div><b>5.0 on Google</b><br><span>29+ Reviews</span></div>
+      <div><b><span id="badgeRating">5.0</span> on Google</b><br><span><span id="badgeReviewCount">29+</span> Reviews</span></div>
     </div>
     <div class="section-head" style="margin-bottom:40px;">
       <h2>What Guests Are Saying</h2>
@@ -750,15 +750,58 @@
     accordion.appendChild(wrap);
   });
 
-  const imgs = [1652,1653,1655,1657,1658,1659,1665,1670,1671,1678,1679,1680,1683];
+  // Gallery pulls its file list live from the assets/images/gallery/ folder on GitHub,
+  // so adding a photo is just uploading it there — no code edit needed.
+  const GALLERY_API = 'https://api.github.com/repos/kingkongcommerce-star/huddle-sports-bar/contents/assets/images/gallery';
+  const IMAGE_EXT = /\.(jpe?g|png|webp|gif)$/i;
   const grid = document.getElementById('galleryGrid');
-  imgs.forEach(n => {
-    const img = document.createElement('img');
-    img.src = `assets/images/IMG_${n}.JPG`;
-    img.loading = 'lazy';
-    img.alt = 'The Huddle Sports Bar, District 1, Ho Chi Minh City';
-    grid.appendChild(img);
-  });
+  fetch(GALLERY_API)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(files => {
+      files
+        .filter(f => f.type === 'file' && IMAGE_EXT.test(f.name))
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(f => {
+          const img = document.createElement('img');
+          img.src = f.download_url;
+          img.loading = 'lazy';
+          img.alt = 'The Huddle Sports Bar, District 1, Ho Chi Minh City';
+          grid.appendChild(img);
+        });
+    })
+    .catch(() => { /* GitHub API unreachable — gallery just stays empty rather than broken */ });
+
+  // Live Google rating — pulls current rating/review count on every page load so nobody
+  // has to hand-edit the number. Needs a Places API (New) key restricted to this domain;
+  // until GOOGLE_PLACES_API_KEY is set, the static fallback numbers above stay as-is.
+  const GOOGLE_PLACES_API_KEY = 'PASTE_GOOGLE_PLACES_API_KEY_HERE';
+  if (GOOGLE_PLACES_API_KEY && GOOGLE_PLACES_API_KEY !== 'PASTE_GOOGLE_PLACES_API_KEY_HERE') {
+    fetch('https://places.googleapis.com/v1/places:searchText', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': GOOGLE_PLACES_API_KEY,
+        'X-Goog-FieldMask': 'places.rating,places.userRatingCount'
+      },
+      body: JSON.stringify({ textQuery: 'The Huddle Sports Bar, 37 Hai Ba Trung, District 1, Ho Chi Minh City' })
+    })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        const place = data.places && data.places[0];
+        if (!place) return;
+        const rating = place.rating != null ? place.rating.toFixed(1) : null;
+        const count = place.userRatingCount != null ? `${place.userRatingCount}+` : null;
+        if (rating) {
+          document.getElementById('statRating').textContent = rating;
+          document.getElementById('badgeRating').textContent = rating;
+        }
+        if (count) {
+          document.getElementById('statReviewCount').textContent = count;
+          document.getElementById('badgeReviewCount').textContent = count;
+        }
+      })
+      .catch(() => { /* API unreachable or key misconfigured — static fallback numbers stay */ });
+  }
 
   const header = document.getElementById('header');
   window.addEventListener('scroll', () => {
